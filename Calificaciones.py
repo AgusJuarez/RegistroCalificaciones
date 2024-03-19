@@ -20,7 +20,7 @@ class RegistroCalificaciones:
         
         #Crea el DataFrame con las columnas Alumno, Materia y Calificacion        
 
-    def agregar_alumno(self, nombre_alumno):
+    def agregar_alumno(self, nombre_alumno): 
         #Por cada materia existente en la tabla se agrega una fila con el nombre del alumno
         #y cada materia encontrada, sin clasificacion.
         for materia in self.registro['Materia'].unique():
