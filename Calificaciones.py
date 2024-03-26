@@ -36,7 +36,7 @@ class RegistroCalificaciones:
         if (self.verificar_materia_registrada(nombre_alumno, materia)):
             nueva_fila = {'Alumno': nombre_alumno, 'Materia': materia, 'Calificación': calificacion}
             self.registro = self.registro._append(nueva_fila, ignore_index=True)
-            self.guardar_registro();
+            self.guardar_registro()
         else:
             print("Este alumno ya tiene calificacion en la materia.")
 
