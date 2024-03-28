@@ -1,8 +1,11 @@
 Alumno,Materia,Calificación
 Agustin,Matematica,10
-Agustin,Historia,4
-Karen,Estadistica,10
-Karen,Lengua,2
-Fernando,Informatica,8
-Fernando,Algebra,6
-Fernando,Ciencias Naturales,2
+Agustin,Historia,6
+Agustin,Lengua,8
+Karen,Matematica,7
+Karen,Historia,9
+Karen,Lengua,6
+Fernando,Matematica,4
+Fernando,Historia,10
+Fernando,Lengua,8
+Fernando,Informatica,7
