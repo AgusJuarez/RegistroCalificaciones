@@ -12,8 +12,7 @@ import numpy as np
 class RegistroCalificaciones:
     
     def __init__(self):
-        try:
-            
+        try:            
             # Define el diccionario de tipos de datos para cada columna
             dtype_dict = {
                 'Alumno': str,
@@ -33,29 +32,35 @@ class RegistroCalificaciones:
         return materia_registrada
         
     def asignar_calificacion(self, nombre_alumno, materia, calificacion):
-        if (self.esta_calificacion_no_registrada(nombre_alumno, materia)):
-            nueva_fila = {'Alumno': nombre_alumno, 'Materia': materia, 'Calificación': calificacion}
-            self.registro = self.registro._append(nueva_fila, ignore_index=True)
-            self.guardar_registro()
-        else:
-            print("Este alumno ya tiene calificacion en la materia.")
+        try:
+            if (self.esta_calificacion_no_registrada(nombre_alumno, materia)):
+                nueva_fila = {'Alumno': nombre_alumno, 'Materia': materia, 'Calificación': calificacion}
+                self.registro = self.registro._append(nueva_fila, ignore_index=True)
+                self.guardar_registro()
+            else:
+                print("Este alumno ya tiene calificacion en la materia.")
+        except:
+            print("Error al ingresar nueva calificacion al alumno: " + nombre_alumno.lower().capitalize())
 
     def mostrar_promedio(self, nombre_alumno):
         try:
+            print("entro al try")
             promedios = []
             for materia in self.registro['Materia'].unique():
-                calificaciones = self.registro.loc[(self.registro['Alumno'] == nombre_alumno) & (self.registro['Materia'] == materia), 'Calificación']
+                print("Dentro del for")
+                calificaciones = self.registro.loc[(self.registro['Alumno'].str.upper() == nombre_alumno.upper()) & (self.registro['Materia'].str.upper() == materia.upper()), 'Calificación']
                 if not calificaciones.empty:
                     promedio = calificaciones.mean()
                     promedios.append(promedio)
-
+            print("llego al if")
             if promedios:
+                print("dentro del if")
                 promedio_total = sum(promedios) / len(promedios)
-                print("Promedio de calificaciones para", nombre_alumno, "en todas las materias:", promedio_total)
+                print("Promedio de calificaciones para", nombre_alumno.lower().capitalize(), "en todas las materias:", promedio_total)
             else:
-                print("No hay calificaciones registradas para", nombre_alumno)
+                print("No hay calificaciones registradas para", nombre_alumno.lower().capitalize())
         except:
-            print("Error al mostrar el promedio del Alumno: " + nombre_alumno)
+            print("Error al mostrar el promedio del Alumno: " + nombre_alumno.lower().capitalize())
     
     
     def guardar_registro(self):
@@ -102,7 +107,9 @@ class RegistroCalificaciones:
         # Mostrar la figura
         plt.show()
         
+
     def mostrar_modelo_tabla_de_calificaciones_2(self):
+
         # Verificar si la columna 'Alumno' está presente en el DataFrame
         if 'Alumno' not in self.registro.columns:
             print("Error: La columna 'Alumno' no está presente en el DataFrame.")
@@ -144,9 +151,7 @@ class RegistroCalificaciones:
                 cell.set_text_props(weight='bold', color='black')
         # Mostrar la tabla
         plt.show()
-    
-    
-        
+
 
 if __name__ == "__main__":
     # Ejemplo de uso
@@ -163,25 +168,26 @@ if __name__ == "__main__":
     while True:
         try:
             opcion = int(input("Elija una opción: "))
+            if(opcion == 1):
+                nombre = input("Nombre del alumno: ")
+                materia = input("Materia: ")
+                calificacion = int(input("Ingrese calificacion de la materia: "))
+                registro.asignar_calificacion(nombre, materia, calificacion)
+            elif (opcion == 2):
+                registro.mostrar_modelo_tabla_de_calificaciones_1()
+                registro.mostrar_modelo_tabla_de_calificaciones_2()
+            elif (opcion == 3):
+                registro.guardar_registro()
+            elif (opcion == 4):
+                nombre = input("Nombre alumno: ")
+                registro.mostrar_promedio(nombre)
+            elif (opcion == 5):   
+                registro.visualizar_registro()
+            elif (opcion == 6):
+                print("Gracias. ¡Vuelvas prontos!")
+                break
+            else:
+                print("Opcion incorrecta.")
         except:
             print("Ingrese una opcion válida.")
             
-        if(opcion == 1):
-            nombre = input("Nombre del alumno: ")
-            materia = input("Materia: ")
-            calificacion = input("Ingrese calificacion de la materia: ")
-            registro.asignar_calificacion(nombre, materia, calificacion)
-        elif (opcion == 2):
-            registro.mostrar_modelo_tabla_de_calificaciones_1()
-            registro.mostrar_modelo_tabla_de_calificaciones_2()
-        elif (opcion == 3):
-            registro.guardar_registro()
-        elif (opcion == 4):
-            nombre = input("Nombre alumno: ")
-            registro.mostrar_promedio(nombre)
-        elif (opcion == 5):   
-            registro.visualizar_registro()
-        elif (opcion == 6):
-            break
-        else:
-            print("Opcion incorrecta.")
