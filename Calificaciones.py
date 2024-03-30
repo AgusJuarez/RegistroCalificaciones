@@ -44,17 +44,13 @@ class RegistroCalificaciones:
 
     def mostrar_promedio(self, nombre_alumno):
         try:
-            print("entro al try")
             promedios = []
             for materia in self.registro['Materia'].unique():
-                print("Dentro del for")
                 calificaciones = self.registro.loc[(self.registro['Alumno'].str.upper() == nombre_alumno.upper()) & (self.registro['Materia'].str.upper() == materia.upper()), 'Calificación']
                 if not calificaciones.empty:
                     promedio = calificaciones.mean()
                     promedios.append(promedio)
-            print("llego al if")
             if promedios:
-                print("dentro del if")
                 promedio_total = sum(promedios) / len(promedios)
                 print("Promedio de calificaciones para", nombre_alumno.lower().capitalize(), "en todas las materias:", promedio_total)
             else:
